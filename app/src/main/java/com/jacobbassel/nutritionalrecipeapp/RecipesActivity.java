@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +32,7 @@ public class RecipesActivity extends AppCompatActivity {
     String queryFinder;
     String thing;
     ArrayList<String> savedData = new ArrayList<String>();
+    ArrayList<String> savedIngredients = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +85,6 @@ public class RecipesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText et = findViewById(R.id.edit_text);
-                queryFinder = "/analyzedInstructions?";
                 thing = "Save";
                 doDownload();
 
@@ -94,9 +95,9 @@ public class RecipesActivity extends AppCompatActivity {
     }
 
 
-    private StackExchangeDownload dataDownload;
+    public StackExchangeDownload dataDownload;
 
-    private void doDownload() {
+    public void doDownload() {
         if (dataDownload == null) {
             dataDownload = new StackExchangeDownload();
             dataDownload.execute();
@@ -104,7 +105,7 @@ public class RecipesActivity extends AppCompatActivity {
     }
 
 
-    private class StackExchangeDownload extends AsyncTask<Void, Void, ResultData> {
+    public class StackExchangeDownload extends AsyncTask<Void, Void, ResultData> {
         @Override
         protected ResultData doInBackground(Void... voids) {
             ResultData resultData = new ResultData();
@@ -136,6 +137,9 @@ public class RecipesActivity extends AppCompatActivity {
                     JSONObject reader = new JSONObject(jsonData.toString());
 
                     JSONArray items = reader.getJSONArray("ingredients");
+
+                    titleBuilder.append("recipe Ingredients for id: " + id + "\n" + "------------------------------------------------------------------------------------------------" + "\n");
+
                     for (int i = 0; i < items.length(); i++) {
                         JSONObject item = items.getJSONObject(i);
 
@@ -155,6 +159,11 @@ public class RecipesActivity extends AppCompatActivity {
                         titleBuilder.append("\n" + "------------------------------------------------------------------------------------------------" + "\n");
 
                     }
+
+                    if (thing == "Save") {
+                        savedIngredients.add(titleBuilder.toString());
+                    }
+
                 }
 
                 else if(queryFinder == "/analyzedInstructions?") {
@@ -181,6 +190,9 @@ public class RecipesActivity extends AppCompatActivity {
 
                     }
 
+                    if (thing == "Save") {
+                        savedData.add(titleBuilder.toString());
+                    }
                 }
 
                 resultData.titleStr = titleBuilder.toString();
@@ -193,6 +205,12 @@ public class RecipesActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+            for (int i = 0; i < savedData.size(); i++) {
+                Log.i("Thing", savedData.get(i));
+            }
+
+
             return resultData;
         }
 
@@ -200,10 +218,6 @@ public class RecipesActivity extends AppCompatActivity {
         protected void onPostExecute(ResultData resultData) {
             TextView tv = findViewById(R.id.text_view);
             tv.setText(resultData.titleStr);
-
-            if (thing == "Save") {
-                savedData.add(resultData.titleStr);
-            }
 
 
             dataDownload = null;
@@ -214,18 +228,33 @@ public class RecipesActivity extends AppCompatActivity {
         String titleStr = "";
     }
 
+    // 482574
+    // 723984
+    // 121545
+
     @Override
     public void onPause(){
         super.onPause();
         SharedPreferences sp = getSharedPreferences("MyPref2", 0);
         SharedPreferences.Editor editor = sp.edit();
 
+        SharedPreferences sp2 = getSharedPreferences("MyPref3", 0);
+        SharedPreferences.Editor editor2 = sp2.edit();
+
         editor.putInt("arraySize2", savedData.size());
+        editor2.putInt("arraySize3", savedIngredients.size());
 
         for (int i = 0; i < savedData.size(); i++) {
             editor.putString("thing2" + i, savedData.get(i));
         }
 
+        for (int i = 0; i < savedIngredients.size(); i++) {
+            editor2.putString("thing3" + i, savedIngredients.get(i));
+        }
+
         editor.commit();
+        editor2.commit();
     }
+
+
 }

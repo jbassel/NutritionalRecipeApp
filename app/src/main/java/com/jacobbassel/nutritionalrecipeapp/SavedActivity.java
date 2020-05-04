@@ -63,6 +63,16 @@ public class SavedActivity extends AppCompatActivity{
             }
 
         });
+        findViewById(R.id.button7).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView text2 = findViewById(R.id.text_view2);
+
+                loader3(text2);
+
+            }
+
+        });
 
 
     }
@@ -88,6 +98,19 @@ public class SavedActivity extends AppCompatActivity{
         for (int i = 0; i <= size; i++) {
             id.add(pref2.getString("thing2" + i, null));
             text2.setText(pref2.getString( "thing2" + i, "Saved ID's for future reference") + "\n" + "------------------------------------------------------------------------------------------------" + "\n" + text2.getText());
+
+        }
+    }
+
+    public void loader3(TextView text2) {
+        SharedPreferences pref3 = getSharedPreferences("MyPref3", 0);
+        text2.setText("");
+
+        int size = pref3.getInt("arraySize3", 0);
+
+        for (int i = 0; i <= size; i++) {
+            id.add(pref3.getString("thing3" + i, null));
+            text2.setText(pref3.getString( "thing3" + i, "Saved ID's for future reference") + "\n" + "------------------------------------------------------------------------------------------------" + "\n" + text2.getText());
 
         }
     }

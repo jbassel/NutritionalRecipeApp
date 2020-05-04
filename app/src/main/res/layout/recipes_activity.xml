@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/appbackground">
 
     <Button
         android:id="@+id/button2"
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content"
         android:autofillHints="Enter Food"
         android:ems="10"
+        android:textColor="#FF0000"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,6 +62,7 @@
             <TextView
                 android:id="@+id/text_view"
                 android:textSize="15sp"
+                android:textColor="#FFFFFF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>

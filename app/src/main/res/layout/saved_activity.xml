@@ -3,18 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/appbackground">
 
     <Button
         android:id="@+id/search_button"
-        android:layout_width="141dp"
-        android:layout_height="95dp"
-        android:layout_marginEnd="252dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="128dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="36dp"
         android:text="load my saved id"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
@@ -36,20 +34,30 @@
                 android:id="@+id/text_view2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
         </LinearLayout>
     </ScrollView>
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="136dp"
-        android:layout_height="95dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginBottom="16dp"
-        android:text="load my saved recipe"
+        android:layout_width="130dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="16dp"
+        android:text="load my saved recipe steps"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="101dp"
+        android:layout_height="70dp"
+        android:text="load my saved recipe ingredients"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button3"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/search_button" />
+        app:layout_constraintStart_toEndOf="@+id/search_button"
+        app:layout_constraintTop_toBottomOf="@+id/scroll_view2"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
