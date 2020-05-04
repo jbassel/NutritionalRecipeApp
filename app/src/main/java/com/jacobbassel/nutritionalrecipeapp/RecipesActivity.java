@@ -31,6 +31,9 @@ public class RecipesActivity extends AppCompatActivity {
     String id;
     String queryFinder;
     String thing;
+
+    int counter = 0;
+
     ArrayList<String> savedData = new ArrayList<String>();
     ArrayList<String> savedIngredients = new ArrayList<String>();
 
@@ -133,6 +136,7 @@ public class RecipesActivity extends AppCompatActivity {
                 StringBuilder titleBuilder = new StringBuilder();
 
                 if (queryFinder == "/ingredientWidget.json?") {
+                    counter = 0;
 
                     JSONObject reader = new JSONObject(jsonData.toString());
 
@@ -141,6 +145,7 @@ public class RecipesActivity extends AppCompatActivity {
                     titleBuilder.append("recipe Ingredients for id: " + id + "\n" + "------------------------------------------------------------------------------------------------" + "\n");
 
                     for (int i = 0; i < items.length(); i++) {
+                        counter++;
                         JSONObject item = items.getJSONObject(i);
 
                         JSONObject idnum = item.getJSONObject("amount");
@@ -160,6 +165,8 @@ public class RecipesActivity extends AppCompatActivity {
 
                     }
 
+                    titleBuilder.append("Total Ingredients needed +" + counter);
+
                     if (thing == "Save") {
                         savedIngredients.add(titleBuilder.toString());
                     }
@@ -167,6 +174,8 @@ public class RecipesActivity extends AppCompatActivity {
                 }
 
                 else if(queryFinder == "/analyzedInstructions?") {
+
+                    counter = 0;
 
                     JSONArray reader2 = new JSONArray(jsonData.toString());
 
@@ -179,6 +188,7 @@ public class RecipesActivity extends AppCompatActivity {
 
                         for (int j = 0; j < thing3.length(); j++) {
                             JSONObject item2 = thing3.getJSONObject(j);
+                            counter++;
 
                             String idnum = item2.getString("step");
 
@@ -187,6 +197,8 @@ public class RecipesActivity extends AppCompatActivity {
                             titleBuilder.append(idnum + "\n" + "------------------------------------------------------------------------------------------------" + "\n");
 
                         }
+
+                        titleBuilder.append("total steps needed: " + counter);
 
                     }
 
